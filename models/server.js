@@ -1,25 +1,30 @@
 const express = require("express");
 const cors = require("cors");
+const { dbConnection } = require("../db/config.js");
 
 class server {
   constructor() {
     this.app = express();
 
     this.usuariosPath = "/api/usuarios";
-
+    this.conectarBb();
     this.midelwares();
     this.routes();
   }
 
   routes() {
-    this.app.use(this.usuariosPath, require('../routes/user.js'));
+    this.app.use(this.usuariosPath, require("../routes/user.js"));
+  }
+
+  async conectarBb() {
+    await dbConnection();
   }
 
   midelwares() {
     //CORS
     this.app.use(cors());
 
-    //Parseo y lectura del body 
+    //Parseo y lectura del body
     this.app.use(express.json());
 
     this.app.use(express.static("public"));
