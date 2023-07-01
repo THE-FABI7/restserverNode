@@ -1,5 +1,6 @@
 const { response } = require("express");
 const User = require("../models/user");
+const bcrypt = require("bcryptjs");
 
 const usersGet = (req, res = response) => {
   const query = req.query;
@@ -11,11 +12,28 @@ const usersGet = (req, res = response) => {
 };
 
 const userPost = async (req, res = response) => {
-  const body = req.body;
-  const user = new User(body);
-  await user.save();
+  const { nombre, correo, password, rol, estado, google } = req.body;
 
-  res.json({ msg: "user post request", user });
+  try {
+    // Encriptar la contraseña
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Crear el usuario con la contraseña encriptada
+    const newUser = new User({
+      nombre,
+      correo,
+      password: hashedPassword,
+      rol,
+      estado,
+      google,
+    });
+
+    const savedUser = await newUser.save();
+    res.json({ msg: "User created", user: savedUser });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 const usersPut = (req, res = response) => {
