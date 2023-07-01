@@ -12,12 +12,20 @@ const usersGet = (req, res = response) => {
 };
 
 const userPost = async (req, res = response) => {
+ 
   const { nombre, correo, password, rol, estado, google } = req.body;
+ 
+  //validate el correo si existe
+  const existeMail = await User.findOne({ correo });
+
+  if (existeMail) {
+    return res.status(400).json({ message: "el correo ya esta registrado" });
+  }
 
   try {
     // Encriptar la contraseña
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const salt = await bcrypt.genSaltSync();
+    const hashedPassword = await bcrypt.hashSync(password, salt);
 
     // Crear el usuario con la contraseña encriptada
     const newUser = new User({
@@ -29,6 +37,7 @@ const userPost = async (req, res = response) => {
       google,
     });
 
+    //guardar el usuario en la base de datos
     const savedUser = await newUser.save();
     res.json({ msg: "User created", user: savedUser });
   } catch (error) {
