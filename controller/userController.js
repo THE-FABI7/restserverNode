@@ -16,11 +16,6 @@ const userPost = async (req, res = response) => {
   const { nombre, correo, password, rol, estado, google } = req.body;
  
   //validate el correo si existe
-  const existeMail = await User.findOne({ correo });
-
-  if (existeMail) {
-    return res.status(400).json({ message: "el correo ya esta registrado" });
-  }
 
   try {
     // Encriptar la contraseña
