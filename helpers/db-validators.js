@@ -32,7 +32,21 @@ const existeMail = async (req, res, next) => {
   next();
 };
 
+const existeUserPorId = async ( id) => {
+    
+    const existeUser = await User.findById( id)
+    
+    if( !existeUser){
+        throw new Error ("User already exists in database " + id +   "!");
+    }
+
+    next();
+  };
+
+
+
 module.exports = {
   EsRolValido,
   existeMail,
+  existeUserPorId
 };
