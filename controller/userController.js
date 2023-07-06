@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 
 const usersGet = async (req, res = response) => {
   //Limitamos el numero de ususarios que se obtienen al momento de hacer la peticion
-  const { limit = 9, desde  =1} = req.query;
+  const { limit = 9, desde = 1 } = req.query;
   const query = { estado: true };
 
   const [total, users] = await Promise.all([
@@ -13,7 +13,8 @@ const usersGet = async (req, res = response) => {
   ]);
 
   res.json({
-    total, users
+    total,
+    users,
   });
 };
 
@@ -81,8 +82,14 @@ const usersPatch = (req, res = response) => {
   res.json({ msg: "users patch request" });
 };
 
-const usersDelete = (req, res = response) => {
-  res.json({ msg: "users delete request" });
+const usersDelete = async (req, res = response) => {
+  const { id } = req.params;
+  //fisicamente lo borramos
+  // const user = await User.findByIdAndDelete(id);
+
+  const user = await User.findByIdAndUpdate(id, {estado: false});
+
+  res.json({ msg: "users delete request with id = " + id });
 };
 
 module.exports = {
