@@ -15,6 +15,7 @@ const {
   existeMail,
   existeUserPorId,
 } = require("../helpers/db-validators");
+const { validarJWT } = require("../middlewares/validar-jwt");
 
 router.get("/", usersGet);
 
@@ -47,6 +48,7 @@ router.put(
 
 router.delete(
   "/:id",
+  validarJWT,
   check("id", "No es un Id valido").isMongoId(),
   check("id").custom(existeUserPorId),
   usersDelete
