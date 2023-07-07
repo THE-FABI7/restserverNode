@@ -7,14 +7,20 @@ class server {
     this.app = express();
 
     this.usuariosPath = "/api/usuarios";
+    this.authPath = "/api/auth";
     this.conectarBb();
     this.midelwares();
     this.routes();
   }
 
   routes() {
-    this.app.use(this.usuariosPath, require("../routes/user.js"));
+    const userRoutes = require("../routes/user.js");
+    const authRoutes = require("../routes/auth.js");
+  
+    this.app.use(this.usuariosPath, userRoutes);
+    this.app.use(this.authPath, authRoutes);
   }
+  
 
   async conectarBb() {
     await dbConnection();
