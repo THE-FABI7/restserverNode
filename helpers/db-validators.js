@@ -32,18 +32,14 @@ const existeMail = async (req, res, next) => {
   next();
 };
 
-const existeUserPorId = async (req, res, next) => {
-    const { id } = req.params;
-    const existeUser = await User.findById(id);
-  
-    if (!existeUser) {
-      return res.status(404).json({ msg: "Usuario no encontrado" });
-    }
-  
-    next(); // Llama a next() para pasar al siguiente middleware o controlador
-  };
-  
-  
+const existeUserPorId = async (id) => {
+  const existeUser = await User.findById(id);
+
+  if (!existeUser) {
+    throw new Error("User already exists in database " + id + "!");
+  }
+  next();
+};
 
 module.exports = {
   EsRolValido,

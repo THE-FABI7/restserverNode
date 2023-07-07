@@ -4,7 +4,7 @@ const Usuario = require("../models/user.js");
 
 const validarJWT = async (req = request, res = response, next) => {
   const token = req.header("x-token");
-  console.log(token);
+  // console.log(token);
 
   if (!token) {
     return res
