@@ -6,8 +6,14 @@ class server {
   constructor() {
     this.app = express();
 
-    this.usuariosPath = "/api/usuarios";
-    this.authPath = "/api/auth";
+    this.paths = {
+      usuarios: "/api/usuarios",
+      categorias: "/api/categorias",
+      auth: "/api/auth",
+    };
+
+    // this.usuariosPath = "/api/usuarios";
+    // this.authPath = "/api/auth";
     this.conectarBb();
     this.midelwares();
     this.routes();
@@ -16,9 +22,11 @@ class server {
   routes() {
     const userRoutes = require("../routes/user.js");
     const authRoutes = require("../routes/auth.js");
+    const CategoriasRoutes = require("../routes/categorias.js");
 
-    this.app.use(this.usuariosPath, userRoutes);
-    this.app.use(this.authPath, authRoutes);
+    this.app.use(this.paths.usuarios, userRoutes);
+    this.app.use(this.paths.auth, authRoutes);
+    this.app.use(this.paths.categorias, CategoriasRoutes);
   }
 
   async conectarBb() {
