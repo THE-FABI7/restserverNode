@@ -45,7 +45,7 @@
           .then((r) => r.json())
           .then((resp) => {
             console.log(resp);
-            localStorage.setItem("email", resp.user.correo);
+            localStorage.setItem("email", resp.usuario.correo);
           })
           .catch(console.warn);
       }
