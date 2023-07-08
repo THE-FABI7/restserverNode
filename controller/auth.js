@@ -59,12 +59,11 @@ const googleSignIn = async (req, res = response) => {
       try {
         usuario = new user(data);
         await usuario.save();
-        console.log(usuario);      
+        console.log(usuario);
       } catch (error) {
         console.log("No se puede crear el usuario");
         console.log(error);
       }
-  
     }
 
     //Si el usuario no esta activado
@@ -78,7 +77,7 @@ const googleSignIn = async (req, res = response) => {
     res.json({
       msg: "Google Sign In Success ",
       usuario,
-      token
+      token,
     });
   } catch (error) {
     res.status(400).json({

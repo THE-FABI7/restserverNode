@@ -16,11 +16,10 @@ class server {
   routes() {
     const userRoutes = require("../routes/user.js");
     const authRoutes = require("../routes/auth.js");
-  
+
     this.app.use(this.usuariosPath, userRoutes);
     this.app.use(this.authPath, authRoutes);
   }
-  
 
   async conectarBb() {
     await dbConnection();
