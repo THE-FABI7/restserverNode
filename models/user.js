@@ -18,9 +18,10 @@ const userSchema = Schema({
   rol: {
     type: "string",
     required: [true, "The rol is required"],
+    default: "USER_ROLE",
     enum: ["ADMIN_ROLE", "USER_ROLE"],
   },
-  estado: { type: Boolean, required: true },
+  estado: { type: Boolean, default: true },
   google: { type: Boolean, default: false },
 });
 
