@@ -84,7 +84,6 @@ const existeUserPorId = async (id) => {
   next();
 };
 
-
 module.exports = {
   EsRolValido,
   existeMail,
