@@ -10,7 +10,7 @@ const {
   eliminarCategoria,
   actualizarCategoria,
 } = require("../controller/categoriasController");
-const { existeCategoriaPorId } = require("../helpers/db-validators");
+
 
 const router = Router();
 
@@ -18,13 +18,12 @@ const router = Router();
 router.get("/", obtenerCategorias);
 
 //obtener una categoria en especifico con id -publico
-router.get("/:id",[
-  check("id", 'no es un id valido').isMongoId(),
-  check('id', 'no debe estar vacio').not().isEmpty(),
+router.get("/:id", [
+  check("id", "no es un id valido").isMongoId(),
+  check("id", "no debe estar vacio").not().isEmpty(),
   validarCampos,
-  obtenerCategoria
-]
- );
+  obtenerCategoria,
+]);
 
 //crear nuevas categorias - privado -persona con cualquier token valido
 router.post(
@@ -42,7 +41,7 @@ router.put("/:id", [
   validarJWT,
   check("nombre", "el nombre es requerida").not().isEmpty(),
   validarCampos,
-  actualizarCategoria
+  actualizarCategoria,
 ]);
 
 //Eliminar - Administrador -
@@ -51,7 +50,7 @@ router.delete("/:id", [
   check("id", "No es un id de Mongo").isMongoId(),
   esAdminRole,
   validarCampos,
-  eliminarCategoria
+  eliminarCategoria,
 ]);
 
 module.exports = router;

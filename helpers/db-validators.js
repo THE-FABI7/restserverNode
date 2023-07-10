@@ -85,19 +85,8 @@ const existeUserPorId = async (id) => {
 };
 
 
-const existeCategoriaPorId = async (id) => {
-   const existeCategoria = await categorias.findById(id);
-
-   if(!existeCategoria) {
-    throw new Error("Categoria not found in database " + id )
-   }
-   next();
-
-}
-
 module.exports = {
   EsRolValido,
   existeMail,
   existeUserPorId,
-  existeCategoriaPorId
 };
