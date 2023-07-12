@@ -13,7 +13,7 @@ const ProductSchema = Schema({
     default: 0,
   },
   categoria: {
-    type: Schema.Types.ObjectId(),
+    type: Schema.Types.ObjectId,
     ref: "Categoria",
     required: true,
   },
@@ -26,4 +26,4 @@ ProductSchema.methods.toJSON = function () {
   return data;
 };
 
-module.exports = model("", ProductSchema);
+module.exports = model("Producto", ProductSchema);

@@ -1,7 +1,7 @@
 // En tu archivo de middlewares
 const Role = require("../models/role");
 const User = require("../models/user");
-const categorias = require("../models/categorias");
+const Categoria = require("../models/categorias");
 const { validationResult } = require("express-validator");
 
 /**
@@ -84,8 +84,19 @@ const existeUserPorId = async (id) => {
   next();
 };
 
+const existeCategoriaPorId = async( id ) => {
+
+  // Verificar si el correo existe
+  const existeCategoria = await Categoria.findById(id);
+  if ( !existeCategoria ) {
+      throw new Error(`El id no existe ${ id }`);
+  }
+}
+
+
 module.exports = {
   EsRolValido,
   existeMail,
   existeUserPorId,
+  existeCategoriaPorId
 };
