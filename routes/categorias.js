@@ -11,7 +11,6 @@ const {
   actualizarCategoria,
 } = require("../controller/categoriasController");
 
-
 const router = Router();
 
 //obtener todas las categorias
