@@ -74,6 +74,18 @@ const buscarProductos = async (termino = "", res = response) => {
   });
 };
 
+/**
+ * La función "buscar" es una función de JavaScript que toma un objeto de solicitud y respuesta, y en
+ * función de la colección proporcionada y el término de búsqueda, realiza una operación de búsqueda en
+ * diferentes colecciones como "usuarios", "categorías" y "productos". .
+ * @param req - El parámetro `req` es el objeto de solicitud que contiene información sobre la
+ * solicitud HTTP realizada por el cliente. Incluye propiedades como el método de solicitud, los
+ * encabezados de la solicitud, el cuerpo de la solicitud y los parámetros de la solicitud.
+ * @param [res] - El parámetro `res` es el objeto de respuesta que se usa para enviar la respuesta al
+ * cliente. Es una instancia del objeto `respuesta` del marco Express.
+ * @returns un objeto de respuesta con un código de estado y un objeto JSON que contiene un mensaje de
+ * error.
+ */
 const buscar = (req, res = response) => {
   const { coleccion, termino } = req.params;
 
