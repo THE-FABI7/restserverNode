@@ -7,11 +7,15 @@ const cargarArchivo = async (req, res) => {
     return;
   }
 
-  const nombre = await subirArchivo(req.files);
+  try {
+    const nombre = await subirArchivo(req.files, undefined, 'imgs');
 
-  res.json({
-    nombre,
-  });
+    res.json({
+      nombre,
+    });
+  } catch (msg) {
+    res.status(400).json({msg})
+  }
 };
 
 module.exports = {
