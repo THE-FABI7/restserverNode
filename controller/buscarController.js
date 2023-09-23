@@ -5,7 +5,7 @@ const Categoria = require("../models/categorias");
 const Producto = require("../models/producto");
 const Rol = require("../models/role");
 
-const coleccionesPermitidas = ["usuarios", "categorias", "productos", "roles"];
+const coleccionesPermitidas = ["users", "categorias", "productos", "roles"];
 
 const buscarUsuario = async (termino = "", res = response) => {
   const esMongoId = ObjectId.isValid(termino); //TRUE
@@ -114,4 +114,6 @@ const buscar = (req, res = response) => {
 
 module.exports = {
   buscar,
+  coleccionesPermitidas,
+  
 };

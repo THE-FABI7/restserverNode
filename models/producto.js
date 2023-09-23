@@ -18,12 +18,14 @@ const ProductSchema = Schema({
     required: true,
   },
   descripcion: { type: String},
-  disponible: {type: Boolean, default: true}
+  disponible: {type: Boolean, default: true},
+  img: {type: String}
 });
 
 ProductSchema.methods.toJSON = function () {
   const { __v, estado, ...data } = this.toObject();
   return data;
+
 };
 
 module.exports = model("Producto", ProductSchema);
