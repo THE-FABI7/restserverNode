@@ -1,3 +1,4 @@
+const response = require('express');
 const express = require("express");
 const path = require('path')
 const fs = require('fs')
@@ -74,12 +75,12 @@ const actualizarImagen = async (req, res) => {
 
   //limpiar imagenes previas 
   if (modelo.img) {
-    
-    const pathImagen = path.join( __dirname, '../uploads', coleccion, modelo.img)
-   if( fs.existsSync(pathImagen)){
+
+    const pathImagen = path.join(__dirname, '../uploads', coleccion, modelo.img)
+    if (fs.existsSync(pathImagen)) {
       fs.unlinkSync(pathImagen)
 
-   }
+    }
 
   }
 
@@ -92,9 +93,61 @@ const actualizarImagen = async (req, res) => {
   res.json(modelo);
 };
 
+
+//implementar la funcion de mostrarImagen que mostrara la imagen del usuario o producto en el front
+const mostrarImagen = async (req, res = response) => {
+
+  const { id, coleccion } = req.params;
+
+  let modelo;
+
+  switch (coleccion) {
+    case 'users':
+      modelo = await Usuario.findById(id);
+      if (!modelo) {
+        return res.status(400).json({
+          msg: `No existe un usuario con el id ${id}`
+        })
+      }
+
+      break;
+
+    case 'productos':
+      modelo = await Producto.findById(id);
+      if (!modelo) {
+        return res.status(400).json({
+          msg: `No existe un usuario con el id ${id}`
+        })
+      }
+
+      break;
+
+    default:
+      return res.status(400).json({
+        msg: 'La coleccion no esta permitida'
+      })
+  }
+
+
+  if (modelo.img) {
+
+    const pathImagen = path.join(__dirname, '../uploads', coleccion, modelo.img)
+    if (fs.existsSync(pathImagen)) {
+      return res.sendFile(pathImagen)
+
+    }
+
+  }
+
+  res.json({ msg: 'falta place holder' });
+
+}
+
+
 module.exports = {
   cargarArchivo,
   actualizarImagen,
+  mostrarImagen
 };
 
 
