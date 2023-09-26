@@ -1,4 +1,6 @@
 const express = require("express");
+const path = require('path')
+const fs = require('fs')
 const { subirArchivo } = require("../helpers/subir-archivos");
 const Usuario = require('../models/user');
 const Producto = require('../models/producto')
@@ -68,6 +70,17 @@ const actualizarImagen = async (req, res) => {
       return res.status(400).json({
         msg: 'La coleccion no esta permitida'
       })
+  }
+
+  //limpiar imagenes previas 
+  if (modelo.img) {
+    
+    const pathImagen = path.join( __dirname, '../uploads', coleccion, modelo.img)
+   if( fs.existsSync(pathImagen)){
+      fs.unlinkSync(pathImagen)
+
+   }
+
   }
 
   const nombre = await subirArchivo(req.files, undefined, coleccion);
